@@ -1,11 +1,11 @@
 #!/bin/bash/python3
-
+#Test
 """ Welcome to our application! We have created this application to seamlessly view IPV4, IPV6 and location of the users!"""
-
 import requests
 
+
 def get_ip_info(api_key):                 #This is defining the API, ensuring this API works with the provided key
-    url = f'http://api.ipstack.com/check'
+    url = f'http://api.ipstack.com/check/'
     params = {'access_key': api_key}
 
     try:
@@ -18,14 +18,24 @@ def get_ip_info(api_key):                 #This is defining the API, ensuring th
     except Exception as e:
         print(f"Error: {e}")
         return None
+    
 
 def main():                                    #this is defining the main code using we define the API key here
     api_key = '8d12eee976f4d115e89b3561b3d5fff4'
     ip_info = get_ip_info(api_key)
+
     if ip_info:
         print("IP Address:", ip_info.get('ip')) #This is requesting the IP address of the current user
-        print("Country:", ip_info.get('country_name')) #The feature pulls the country of the user
         print("Type:", ip_info.get('type')) #This shows the type of connection, whether an IPV4 or IPV6
+        print("Country:", ip_info.get('country_name')) #The feature pulls the country of the user
+        print("State:", ip_info.get("region_name"))
+         # Accessing Capital information
+        connection_info = ip_info.get('location', {})
+        capital = connection_info.get('capital', 'Unknown capital')  # Default to 'Unknown capital' if ISP information is not available
+        print("Capital:", capital)
+      
+        
+  
     else:
         print("Failed to retrieve IP information.") #This gives us a failure if the code is run without any IP addressing information
 
